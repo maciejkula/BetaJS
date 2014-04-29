@@ -1,0 +1,16 @@
+{
+    "name": "beta-js"
+  , "version": "0.0.1"
+  , "description": "Beta probability density function for JS"
+  , "main": "beta"
+  , "engines": { "node": ">= 0.4.x < 0.7.0" }
+  , "scripts": {
+    "test": "make test"
+  }
+  , "dependencies": {
+      "gamma": "0.1.0"
+  }
+  , "devDependencies": {
+      "mocha": "0.3.x"
+  }
+}
