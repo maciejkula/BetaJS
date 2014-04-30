@@ -22,6 +22,8 @@ var BetaDistribution = function (alpha, beta) {
 
     this.mode = ((this.alpha - 1)
 		 / (this.alpha + this.beta - 2));
+
+    this.pdfAtMode = this.pdf(this.mode);
 };
 
 BetaDistribution.prototype.lpdf = function(x) {
@@ -45,7 +47,7 @@ BetaDistribution.prototype.rv = function () {
 
 	var pdf = this.pdf(x);
 
-	if (u < pdf/this.mode) {
+	if (u < pdf/this.pdfAtMode) {
 	    return x;
 	};
     };
