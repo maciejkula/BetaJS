@@ -48,7 +48,8 @@ suite('beta', function() {
 		       var b = datum[1];
 		       var arg = datum[2];
 		       var val = datum[3];
-		       assert.equal(true, Math.abs(beta.betaPDF(arg, a, b) - val) < 0.000001);
+		       var betaDistribution = beta.beta(a, b);
+		       assert.equal(true, Math.abs(betaDistribution.pdf(arg) - val) < 0.000001);
 		   };
 	       });
       });
