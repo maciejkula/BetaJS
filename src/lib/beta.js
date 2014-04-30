@@ -30,6 +30,9 @@ BetaDistribution.prototype.pdf = function(x) {
     if (x < 0 || x > 1) {
 	return 0;
     };
+    if (this.alpha == 1 && this.beta == 1) {
+		return 1;
+    };
     return Math.exp(this.lpdf(x));
 };
 
