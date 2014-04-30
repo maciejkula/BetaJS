@@ -1,5 +1,5 @@
 /*
- * A snippet that builds upon gamma.js to provide
+ * A snippet that builds upon jStat to provide
  * the probability density function and the log
  * probability density function for the Beta distribution.
  */
@@ -33,10 +33,6 @@ BetaDistribution.prototype.pdf = function(x) {
     return Math.exp(this.lpdf(x));
 };
 
-/*
- * An extremely rudimentary rejection sampler
- * for unimodal Beta distributions
- */
 BetaDistribution.prototype.rv = function () {
     return jStat.jStat.beta.sample(this.alpha, this.beta);
 };
