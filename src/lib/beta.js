@@ -4,35 +4,32 @@
  * probability density function for the Beta distribution.
  */
 
-var gamma = require('gamma');
-var lngamma = gamma.log;
+var jStat = require('jStat');
+var gammaln = jStat.jStat.gammaln;
 
 var BetaDistribution = function (alpha, beta) {
-
-    if (alpha <= 1 || beta <= 1) {
-	throw "Alpha and beta must be greater than 1";
-    };
 
     this.alpha = alpha;
     this.beta = beta;
 
-    this.betaInverse = (lngamma(this.alpha + this.beta)
-			- lngamma(this.alpha)
-			- lngamma(this.beta));
-
-    this.mode = ((this.alpha - 1)
-		 / (this.alpha + this.beta - 2));
-
-    this.pdfAtMode = this.pdf(this.mode);
+    this.betaInverse = (gammaln(this.alpha + this.beta)
+			- gammaln(this.alpha)
+			- gammaln(this.beta));
 };
 
 BetaDistribution.prototype.lpdf = function(x) {
+    if (x < 0 || x > 1) {
+	return Number.NEGATIVE_INFINITY;
+    };
     return (this.betaInverse
 	    + (this.alpha - 1) * Math.log(x)
 	    + (this.beta - 1) * Math.log(1 - x));
 };
 
 BetaDistribution.prototype.pdf = function(x) {
+    if (x < 0 || x > 1) {
+	return 0;
+    };
     return Math.exp(this.lpdf(x));
 };
 
@@ -41,16 +38,7 @@ BetaDistribution.prototype.pdf = function(x) {
  * for unimodal Beta distributions
  */
 BetaDistribution.prototype.rv = function () {
-    while (true) {
-	var x = Math.random();
-	var u = Math.random();
-
-	var pdf = this.pdf(x);
-
-	if (u < pdf/this.pdfAtMode) {
-	    return x;
-	};
-    };
+    return jStat.jStat.beta.sample(this.alpha, this.beta);
 };
 
 BetaDistribution.prototype.rvs = function(n) {
@@ -68,6 +56,6 @@ var beta = function(alpha, beta) {
   return new BetaDistribution(alpha, beta);  
 };
 
-    
-module.exports.lngamma = lngamma;
+  
+module.exports.lngamma = gammaln;
 module.exports.beta = beta;
